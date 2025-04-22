@@ -1,158 +1,65 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+// Dark mode toggle
+const darkModeToggle = document.getElementById('darkModeToggle');
+darkModeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+});
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #fff;
-  color: #333;
-  transition: background 0.3s, color 0.3s;
-}
+// Hamburger toggle
+const hamburger = document.getElementById('hamburger');
+const navbar = document.getElementById('navbar');
 
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: #f5f5f5;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+hamburger.addEventListener('click', () => {
+  navbar.classList.toggle('active');
+});
 
-.logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-}
-
-.navbar {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.navbar a {
-  text-decoration: none;
-  color: inherit;
-  font-weight: 500;
-}
-
-#darkModeToggle {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-/* Hamburger */
-.hamburger {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-/* Main content */
-.hero {
-  padding: 4rem 2rem;
-  text-align: center;
-  background: linear-gradient(to right, #f9f9f9, #e0e0e0);
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
-}
-
-.product-card {
-  background: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-
-.product-card:hover {
-  transform: scale(1.05);
-}
-
-.product-card img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
-
-.btn {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.8rem 1.5rem;
-  background: #333;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-.contact-form input, .contact-form textarea {
-  width: 90%;
-  margin-bottom: 1rem;
-  padding: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.contact-form button {
-  padding: 0.8rem 1.5rem;
-  background: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-}
-
-/* Cart summary */
-.cart-summary {
-  padding: 2rem;
-  text-align: center;
-}
-
-/* Dark Mode */
-.dark-mode {
-  background: #222;
-  color: #eee;
-}
-
-/* Fade-in Animation */
-.fade-in {
-  animation: fadeIn 1s ease forwards;
-}
-
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(20px);}
-  100% { opacity: 1; transform: translateY(0);}
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .navbar {
-    position: absolute;
-    top: 80px;
-    right: 0;
-    background: #f5f5f5;
-    flex-direction: column;
-    width: 200px;
-    display: none;
-    padding: 1rem;
-    border-radius: 5px;
+// Close navbar if clicked outside
+document.addEventListener('click', function(e) {
+  if (!navbar.contains(e.target) && !hamburger.contains(e.target)) {
+    navbar.classList.remove('active');
   }
-  .navbar.active {
-    display: flex;
-  }
-  .hamburger {
-    display: block;
-  }
+});
+
+// Shopping cart
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartCount = document.getElementById('cart-count');
+
+function updateCartCount() {
+  cartCount.textContent = cart.length;
+}
+
+// Add to Cart
+document.querySelectorAll('.add-to-cart').forEach(button => {
+  button.addEventListener('click', () => {
+    const name = button.getAttribute('data-name');
+    const price = parseFloat(button.getAttribute('data-price'));
+    cart.push({ name, price });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    alert(`${name} added to cart!`);
+  });
+});
+
+updateCartCount();
+
+// Display Cart Items
+if (document.getElementById('cart-items')) {
+  const cartItemsContainer = document.getElementById('cart-items');
+  const subtotalElem = document.getElementById('subtotal');
+  const taxElem = document.getElementById('tax');
+  const totalElem = document.getElementById('total');
+
+  let subtotal = 0;
+  cart.forEach(item => {
+    const itemElem = document.createElement('div');
+    itemElem.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+    cartItemsContainer.appendChild(itemElem);
+    subtotal += item.price;
+  });
+
+  const tax = subtotal * 0.0825;
+  const total = subtotal + tax;
+
+  subtotalElem.textContent = subtotal.toFixed(2);
+  taxElem.textContent = tax.toFixed(2);
+  totalElem.textContent = total.toFixed(2);
 }

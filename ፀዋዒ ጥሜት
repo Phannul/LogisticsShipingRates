@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cart - MyShop</title>
+  <title>Contact - MyShop</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -20,14 +20,14 @@
   <div class="hamburger" id="hamburger">&#9776;</div>
 </header>
 
-<main>
-  <h1>Your Cart</h1>
-  <div id="cart-items" class="fade-in"></div>
-  <div class="cart-summary">
-    <p>Subtotal: $<span id="subtotal">0.00</span></p>
-    <p>Tax (8.25%): $<span id="tax">0.00</span></p>
-    <p>Total: $<span id="total">0.00</span></p>
-  </div>
+<main class="fade-in">
+  <h1>Contact Us</h1>
+  <form class="contact-form">
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Your Email" required>
+    <textarea placeholder="Your Message" required></textarea>
+    <button type="submit">Send</button>
+  </form>
 </main>
 
 <script src="js/script.js"></script>

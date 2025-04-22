@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Home - MyShop</title>
+  <title>Shop - MyShop</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -21,10 +21,22 @@
 </header>
 
 <main>
-  <section class="hero fade-in">
-    <h1>Welcome to MyShop</h1>
-    <p>Find your style. Shop your dream.</p>
-    <a href="shop.html" class="btn">Explore Now</a>
+  <section class="products fade-in">
+    <div class="product-card">
+      <img src="images/product1.jpg" alt="Product 1">
+      <h2>Product 1</h2>
+      <p>$20.00</p>
+      <button class="add-to-cart" data-name="Product 1" data-price="20">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <img src="images/product2.jpg" alt="Product 2">
+      <h2>Product 2</h2>
+      <p>$30.00</p>
+      <button class="add-to-cart" data-name="Product 2" data-price="30">Add to Cart</button>
+    </div>
+
+    <!-- Add more products as you want -->
   </section>
 </main>
 
